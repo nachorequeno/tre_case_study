@@ -18,10 +18,29 @@ def read_expression(filename: str) -> str:
     f.close()
     return expression
 
+def confusion_matrix_heatmap(cm: np.ndarray) -> None:
+    # Visualize the confusion matrix using a heatmap
+    plt.figure(figsize=(10, 7))
+    sn.heatmap(cm, annot=True, fmt='d', # fmt='.2f'
+               cmap='Blues',
+               xticklabels=['Predicted Negative', 'Predicted Positive'],
+               yticklabels=['Actual Negative', 'Actual Positive'])
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Confusion Matrix Heatmap')
+    plt.show()
+
+def normalize_confusion_matrix(cm: np.ndarray) -> np.ndarray:
+    # Normalize the confusion matrix
+    cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    return cm_normalized
 
 def testing(attack: str, positive_examples: list[str], negative_examples: list[str], query_pred: dict) -> tuple[int, int, int, int]:
+
     def check_attack(zones_by_trace: list[Zone]) -> bool:
         # We detect an attack if at least one zone is detected
+        # Additionally, we can impose constraints about the duration of the zones (e.g, cover at least 50% of the day)
+        # return len(zones_by_trace) > 0 and sum(zone.dmin for zone in zones_by_trace) > 0
         return len(zones_by_trace) > 0
 
     # A TRE classifier detects if there is an attack in the system.
@@ -58,27 +77,8 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
     cm = confusion_matrix(y_true, y_pred)
     print(cm)
 
-    # # Visualize the confusion matrix using a heatmap
-    # plt.figure(figsize=(10, 7))
-    # sn.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Predicted Negative', 'Predicted Positive'],
-    #            yticklabels=['Actual Negative', 'Actual Positive'])
-    # plt.xlabel('Predicted')
-    # plt.ylabel('Actual')
-    # plt.title('Confusion Matrix Heatmap')
-    # plt.show()
-
-    # Normalize the confusion matrix
-    cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-
-    # Visualize the normalized confusion matrix using a heatmap
-    plt.figure(figsize=(10, 7))
-    sn.heatmap(cm_normalized, annot=True, fmt='.2f', cmap='Blues',
-               xticklabels=['Predicted Negative', 'Predicted Positive'],
-               yticklabels=['Actual Negative', 'Actual Positive'])
-    plt.xlabel('Predicted')
-    plt.ylabel('Actual')
-    plt.title('Normalized Confusion Matrix Heatmap')
-    plt.show()
+    normalize_confusion_matrix(cm)
+    confusion_matrix_heatmap(cm)
 
     return true_positive, false_positive, true_negative, false_negative
 
@@ -92,11 +92,12 @@ if __name__=="__main__":
     positive_examples = glob.glob(positive_examples_fnames, recursive=True)
     negative_examples = list(set(glob.glob(total_examples_fnames, recursive=True)) - set(positive_examples))
 
+    print(f"Testing attack: {attack}")
     print(f"Positive examples: {len(positive_examples)}, Negative examples: {len(negative_examples)}")
 
     # query_pred = {'lower': lower, 'low': low, 'medium': medium, 'high': high, 'higher': higher}
     if attack.startswith("rsa"):
-        query_preds = attack_predicates_for_rsa.query_preds
+        query_pred = attack_predicates_for_rsa.query_preds
     else:
-        query_preds = attack_predicates.query_preds
+        query_pred = attack_predicates.query_preds
     testing(attack, positive_examples, negative_examples, query_pred)
