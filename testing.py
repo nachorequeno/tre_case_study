@@ -1,7 +1,13 @@
 import glob
 import sys
-
+import numpy as np
+import seaborn as sn
+from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
+
+import attack_predicates
+import attack_predicates_for_rsa
+
 from ParetoLib.Geometry.Zone import Zone
 from ParetoLib.TRE.TRE import TimedrelInterface
 
@@ -12,20 +18,6 @@ def read_expression(filename: str) -> str:
     f.close()
     return expression
 
-def lower(x):
-    None
-
-def low(x):
-    return 0.0 <= x[2] < 0.71
-
-def medium(x):
-    return 0.71 <= x[2] < 1.42
-
-def high(x):
-    return x[2] > 1.42
-
-def higher(x):
-    None
 
 def testing(attack: str, positive_examples: list[str], negative_examples: list[str], query_pred: dict) -> tuple[int, int, int, int]:
     def check_attack(zones_by_trace: list[Zone]) -> bool:
@@ -66,6 +58,28 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
     cm = confusion_matrix(y_true, y_pred)
     print(cm)
 
+    # # Visualize the confusion matrix using a heatmap
+    # plt.figure(figsize=(10, 7))
+    # sn.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Predicted Negative', 'Predicted Positive'],
+    #            yticklabels=['Actual Negative', 'Actual Positive'])
+    # plt.xlabel('Predicted')
+    # plt.ylabel('Actual')
+    # plt.title('Confusion Matrix Heatmap')
+    # plt.show()
+
+    # Normalize the confusion matrix
+    cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
+    # Visualize the normalized confusion matrix using a heatmap
+    plt.figure(figsize=(10, 7))
+    sn.heatmap(cm_normalized, annot=True, fmt='.2f', cmap='Blues',
+               xticklabels=['Predicted Negative', 'Predicted Positive'],
+               yticklabels=['Actual Negative', 'Actual Positive'])
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Normalized Confusion Matrix Heatmap')
+    plt.show()
+
     return true_positive, false_positive, true_negative, false_negative
 
 if __name__=="__main__":
@@ -79,5 +93,10 @@ if __name__=="__main__":
     negative_examples = list(set(glob.glob(total_examples_fnames, recursive=True)) - set(positive_examples))
 
     print(f"Positive examples: {len(positive_examples)}, Negative examples: {len(negative_examples)}")
-    query_pred = {'lower': lower, 'low': low, 'medium': medium, 'high': high, 'higher': higher}
+
+    # query_pred = {'lower': lower, 'low': low, 'medium': medium, 'high': high, 'higher': higher}
+    if attack.startswith("rsa"):
+        query_preds = attack_predicates_for_rsa.query_preds
+    else:
+        query_preds = attack_predicates.query_preds
     testing(attack, positive_examples, negative_examples, query_pred)
