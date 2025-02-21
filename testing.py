@@ -18,7 +18,7 @@ def read_expression(filename: str) -> str:
     f.close()
     return expression
 
-def confusion_matrix_heatmap(cm: np.ndarray) -> None:
+def confusion_matrix_heatmap(cm: np.ndarray, attack: str) -> None:
     # Visualize the confusion matrix using a heatmap
     plt.figure(figsize=(10, 7))
     sn.heatmap(cm, annot=True, fmt='d', # fmt='.2f'
@@ -27,7 +27,7 @@ def confusion_matrix_heatmap(cm: np.ndarray) -> None:
                yticklabels=['Actual Negative', 'Actual Positive'])
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
-    plt.title('Confusion Matrix Heatmap')
+    plt.title(f'Confusion Matrix Heatmap for {attack}')
     plt.show()
 
 def normalize_confusion_matrix(cm: np.ndarray) -> np.ndarray:
@@ -78,7 +78,7 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
     print(cm)
 
     normalize_confusion_matrix(cm)
-    confusion_matrix_heatmap(cm)
+    confusion_matrix_heatmap(cm, attack)
 
     return true_positive, false_positive, true_negative, false_negative
 
