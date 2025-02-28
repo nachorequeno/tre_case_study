@@ -98,8 +98,9 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
     cm = confusion_matrix(y_true, y_pred)
     print(cm)
 
-    normalize_confusion_matrix(cm)
-    confusion_matrix_heatmap(cm, attack)
+    true_positive, false_positive, false_negative, true_negative = cm.flatten()
+    # normalize_confusion_matrix(cm)
+    # confusion_matrix_heatmap(cm, attack)
 
     return true_positive, false_positive, true_negative, false_negative
 
