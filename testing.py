@@ -1,17 +1,17 @@
 import glob
 import sys
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 
 import numpy as np
 import seaborn as sn
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 
-import attack_predicates
-import attack_predicates_for_rsa
-
 from ParetoLib.Geometry.Zone import Zone
 from ParetoLib.TRE.TRE import TimedrelInterface
+
+import attack_predicates
+import attack_predicates_for_rsa
 
 
 def read_expression(filename: str) -> str:
@@ -69,7 +69,8 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
     # positive_zones = [tre_engine.run() for tre_engine in positive_tre_engine]
     # positive_pred = [check_attack(zones_by_trace) for zones_by_trace in positive_zones]
 
-    p = Pool()
+    nproc = cpu_count()
+    p = Pool(nproc)
     positive_zones = p.map(run_tre, positive_tre_engine)
     positive_pred = p.map(check_attack, positive_zones)
 
