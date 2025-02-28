@@ -50,12 +50,10 @@ def not_check_attack(zones_by_trace: list[Zone]) -> bool:
     return not check_attack(zones_by_trace)
 
 def testing(attack: str, positive_examples: list[str], negative_examples: list[str], query_pred: dict) -> tuple[int, int, int, int]:
-
     # A TRE classifier detects if there is an attack in the system.
     # The TRE classifier is based on the input signals and the expression of the attack.
     # The TRE classifier returns the zones of the attack.
     # The TRE classifier musts detect at least one zone in the input signals to consider that the attack is present.
-    true_positive, false_positive, true_negative, false_negative = 0, 0, 0, 0
 
     expression_file = f"./tre/{attack}.txt"
     # expression = "(low ; high) [3 : 4]"
