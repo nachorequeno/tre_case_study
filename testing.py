@@ -81,7 +81,6 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
 
     negative_zones = p.map(run_tre, negative_tre_engine)
     negative_pred = p.map(not_check_attack, negative_zones)
-    # p.join()
 
     # true_positive = sum(positive_pred)
     # true_negative = sum(negative_pred)
