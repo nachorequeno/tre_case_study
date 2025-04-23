@@ -182,8 +182,10 @@ def plot_prsignal_with_zones(output_signal: str, input_signals: list[str], zones
 
 
 if __name__ == '__main__':
-    output_signal = sys.argv[1]
-    input_signals = sys.argv[2:]
+    # output_signal = sys.argv[1]
+    # input_signals = sys.argv[2:]
+    output_signal = "/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/fdi50/days_*"
+    input_signals = "/mnt/d/git_projects/papers/tre_case_study/tre/fdi50.txt"
     # signals2prsignal_opt(output_signal, input_signals)
     signals2prsignal(f"./csv/{output_signal}.csv", input_signals)
     plot_prsignal(f"./svg/{output_signal}.svg", input_signals)
