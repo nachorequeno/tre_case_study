@@ -59,12 +59,12 @@ python experiments.py fdi50 ./day_0_360_user_1143/fdi50/days_*
 
 As output, the Python script will show the temporal zones that return the execution of the TRE expression agains the electricity consumption record.
 
-![img1](/svg/fdi50_zones.svg)
+![img1](/svg/const50_zones.svg)
 
 Additionally, the Python script will overlay the information of the temporal zones on top of the electricity consumption record.
 Green lines represent the time instants when the TRE starts to become true, and the red lines corresponds to the time instants when the TRE ends. 
 
-![img2](/svg/fdi50_signal_and_zones.svg)
+![img2](/svg/const50_signal_and_zones.svg)
 
 Green lines indicate the time instants when the pattern matching of the TRE may begin (b < t < b'); 
 the red lines are the time instants when the pattern recognition may end (e < t < e'), and blue lines represent the duration (b + d < e, b' + d' < e').

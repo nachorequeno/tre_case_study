@@ -10,11 +10,11 @@ Testing attack: max_avg
 Positive examples: 360, Negative examples: 2878
 [[1995  883]
  [  11  349]]
-Testing attack: fdi50
+Testing attack: const50
 Positive examples: 360, Negative examples: 2878
 [[1991  887]
  [   2  358]]
-Testing attack: fdi150
+Testing attack: const150
 Positive examples: 360, Negative examples: 2878
 [[ 698 2180]
  [ 142  218]]

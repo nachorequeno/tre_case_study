@@ -15,10 +15,10 @@ def read_expression(filename: str) -> str:
 if __name__=="__main__":
     # attack = sys.argv[1]
     # input_signals = sys.argv[2:]
-    attack = "fdi50"
-    # input_signals = "/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/fdi50/days_*"
-    input_signals = [f"/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/fdi50/{filename}" for filename in
-                     os.listdir("/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/fdi50") if
+    attack = "const50"
+    # input_signals = "/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/const50/days_*"
+    input_signals = [f"/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/const50/{filename}" for filename in
+                     os.listdir("/mnt/d/git_projects/papers/tre_case_study/day_0_360_user_1143/const50") if
                      filename.startswith("days_")]
 
     #signals2prsignal(f"./csv/{attack}.csv", input_signals)
