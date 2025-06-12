@@ -1,36 +1,36 @@
 Testing attack: avg
-Positive examples: 358, Negative examples: 2880
+Positive examples: 360, Negative examples: 2880
 [[2879    1]
- [   0  358]]
+ [   0  360]]
 Testing attack: min_avg
-Positive examples: 360, Negative examples: 2878
-[[2848   30]
+Positive examples: 360, Negative examples: 2880
+[[2850   30]
  [   0  360]]
 Testing attack: max_avg
-Positive examples: 360, Negative examples: 2878
-[[1995  883]
+Positive examples: 360, Negative examples: 2880
+[[1996  884]
  [  11  349]]
 Testing attack: const50
-Positive examples: 360, Negative examples: 2878
-[[1991  887]
+Positive examples: 360, Negative examples: 2880
+[[1992  888]
  [   2  358]]
 Testing attack: const150
-Positive examples: 360, Negative examples: 2878
-[[ 698 2180]
+Positive examples: 360, Negative examples: 2880
+[[ 698 2182]
  [ 142  218]]
 Testing attack: rsa01_08
-Positive examples: 360, Negative examples: 2878
-[[1466 1412]
+Positive examples: 360, Negative examples: 2880
+[[1467 1413]
  [  12  348]]
 Testing attack: rsa2_5
-Positive examples: 360, Negative examples: 2878
-[[ 131 2747]
+Positive examples: 360, Negative examples: 2880
+[[ 131 2749]
  [ 105  255]]
 Testing attack: swap
-Positive examples: 360, Negative examples: 2878
-[[  18 2860]
+Positive examples: 360, Negative examples: 2880
+[[  18 2862]
  [ 180  180]]
 Testing attack: normal
-Positive examples: 360, Negative examples: 2878
-[[  38 2840]
+Positive examples: 360, Negative examples: 2880
+[[  38 2842]
  [ 343   17]]

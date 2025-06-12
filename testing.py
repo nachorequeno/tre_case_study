@@ -5,7 +5,7 @@ from multiprocessing import Pool, cpu_count
 import numpy as np
 import seaborn as sn
 from matplotlib import pyplot as plt
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
 
 from ParetoLib.Geometry.Zone import Zone
 from ParetoLib.TRE.TRE import TimedrelInterface
@@ -96,6 +96,12 @@ def testing(attack: str, positive_examples: list[str], negative_examples: list[s
     cm = confusion_matrix(y_true, y_pred)
     print(cm)
 
+    # Compute precision, recall, and F1-score
+    precision = precision_score(y_true, y_pred)
+    recall = recall_score(y_true, y_pred)
+    f1 = f1_score(y_true, y_pred)
+    print(f"Precision: {precision}, Recall: {recall}, F1-Score: {f1}")
+
     true_positive, false_positive, false_negative, true_negative = cm.flatten()
     # normalize_confusion_matrix(cm)
     # confusion_matrix_heatmap(cm, attack)
@@ -120,4 +126,6 @@ if __name__=="__main__":
         query_pred = attack_predicates_for_rsa.query_preds
     else:
         query_pred = attack_predicates.query_preds
+
+    # print(f"Query predicates: {query_pred}")
     testing(attack, positive_examples, negative_examples, query_pred)
